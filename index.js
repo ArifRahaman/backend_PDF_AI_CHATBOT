@@ -24,13 +24,29 @@ const server = http.createServer(app);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve static files
 // Middleware
 app.use(express.json());
+// const corsOptions = {
+//   origin: process.env.FRONTEND_URL || "http://localhost:5173", // Replace with your allowed origin
+//   credentials: true,
+// };
+// app.use(cors(corsOptions));
+// const io = socketIo(server);
+const allowedOrigins = [
+  process.env.FRONTEND_URL || "https://frontendaipdfarif.onrender.com",
+  "http://localhost:5173",
+];
+
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173", // Replace with your allowed origin
+  origin: function (origin, callback) {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 };
-app.use(cors(corsOptions));
-// const io = socketIo(server);
 
+app.use(cors(corsOptions));
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI, {
