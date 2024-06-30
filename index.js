@@ -6,7 +6,7 @@ const path = require("path");
 require("dotenv").config();
 const http = require("http");
 const bcrypt = require("bcrypt");
-
+const cookieParser = require('cookie-parser');
 // const socketIo = require("socket.io");
 
 
@@ -23,6 +23,7 @@ const server = http.createServer(app);
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve static files
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 // const corsOptions = {
 //   origin: process.env.FRONTEND_URL || "http://localhost:5173", // Replace with your allowed origin
