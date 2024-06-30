@@ -56,7 +56,7 @@ app.use(cors({
   origin: allowedOrigins,
   credentials: true,
 }));
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI, {
