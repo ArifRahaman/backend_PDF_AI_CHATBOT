@@ -78,3 +78,4 @@ const generateAuthTokenAndSetCookie = (user, res) => {
 module.exports = generateAuthTokenAndSetCookie;
 
 
+
