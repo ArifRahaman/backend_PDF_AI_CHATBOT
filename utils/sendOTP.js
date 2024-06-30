@@ -75,33 +75,37 @@
 //   });
 // };
 
-// module.exports = generateAuthTokenAndSetCookie;
-
-const jwt = require("jsonwebtoken");
+const nodemailer = require("nodemailer");
 require("dotenv").config();
 
-const generateAuthTokenAndSetCookie = (user, res) => {
-  const payload = {
-    _id: user._id,
-    username: user.username,
-    email: user.email,
-    dob: user.dob,
-    universityname: user.universityname,
-  };
+async function sendOTPEmail(userEmail, otp) {
+  try {
+    let transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.GMAIL_USER,
+        pass: process.env.GMAIL_PASSWORD,
+      },
+    });
 
-  const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-    expiresIn: "6d",
-  });
+    let mailOptions = {
+      from: process.env.GMAIL_USER,
+      to: userEmail,
+      subject: "Your OTP Code",
+      text: `Your OTP code is ${otp}`,
+    };
 
-  res.cookie("jwt", token, {
-    maxAge: 6 * 24 * 60 * 60 * 1000, // 6 days
-    httpOnly: true,
-    sameSite: "none",
-    secure:"false"
-  });
-};
+    let info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
+  } catch (error) {
+    console.error("Error sending email: ", error);
+  }
+}
 
-module.exports = generateAuthTokenAndSetCookie;
+module.exports = sendOTPEmail;
+
+
+
 
 
 
