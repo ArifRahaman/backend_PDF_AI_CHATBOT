@@ -39,12 +39,18 @@ const generateAuthTokenAndSetCookie = (user, res) => {
     expiresIn: "6d",
   });
   
-  res.cookie("jwt", token, {
+  // res.cookie("jwt", token, {
+  //   maxAge: 6 * 24 * 60 * 60 * 1000, // 6 days
+  //   httpOnly: true,
+  //   sameSite: "lax",
+  //   secure: false,
+  //   // secure: process.env.NODE_ENV !== "development",
+  // });
+    res.cookie("jwt", token, {
     maxAge: 6 * 24 * 60 * 60 * 1000, // 6 days
     httpOnly: true,
-    sameSite: "lax",
-    secure: false,
-    // secure: process.env.NODE_ENV !== "development",
+    sameSite: process.env.NODE_ENV === "development" ? "lax" : "none",
+    secure: process.env.NODE_ENV !== "development", // Ensure secure is set based on environment
   });
 };
 
