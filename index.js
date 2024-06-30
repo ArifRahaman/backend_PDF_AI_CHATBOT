@@ -31,22 +31,31 @@ app.use(express.json());
 // };
 // app.use(cors(corsOptions));
 // const io = socketIo(server);
+// const allowedOrigins = [
+//   process.env.FRONTEND_URL || "https://frontendaipdfarif.onrender.com",
+//   "http://localhost:5173",
+// ];
+
+// const corsOptions = {
+//   origin: function (origin, callback) {
+//     if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error("Not allowed by CORS"));
+//     }
+//   },
+//   credentials: true,
+// };
+
 const allowedOrigins = [
   process.env.FRONTEND_URL || "https://frontendaipdfarif.onrender.com",
   "http://localhost:5173",
 ];
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+app.use(cors({
+  origin: allowedOrigins,
   credentials: true,
-};
-
+}));
 app.use(cors(corsOptions));
 // MongoDB connection
 mongoose
