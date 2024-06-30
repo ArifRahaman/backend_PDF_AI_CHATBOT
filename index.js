@@ -48,7 +48,7 @@ app.use(express.json());
 // };
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL || "https://frontendaipdfarif.onrender.com",
+  // process.env.FRONTEND_URL || "https://frontendaipdfarif.onrender.com",
   "http://localhost:5173",
 ];
 
