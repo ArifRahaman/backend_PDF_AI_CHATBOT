@@ -43,7 +43,7 @@ const generateAuthTokenAndSetCookie = (user, res) => {
     maxAge: 6 * 24 * 60 * 60 * 1000, // 6 days
     httpOnly: false,
     sameSite: "strict",
-    // secure: false,
+    secure: true,
     // secure: process.env.NODE_ENV !== "development",
   });
 };
