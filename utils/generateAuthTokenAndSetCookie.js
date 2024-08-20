@@ -100,10 +100,10 @@ const generateAuthTokenAndSetCookie = (user, res) => {
   
   res.cookie("jwt", token, {
     maxAge: 6 * 24 * 60 * 60 * 1000, // 6 days
-    // httpOnly: false,
+    httpOnly: true,
     sameSite: "None",
-    domain: "frontendaipdfarif.onrender.com", 
-    secure: false,
+    // domain: "frontendaipdfarif.onrender.com", 
+    secure: true,
 
   });
 };
